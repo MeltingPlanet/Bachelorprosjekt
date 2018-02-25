@@ -43,16 +43,6 @@ function loadSample(url, doAfterLoading) {
     fetchSound.send(); //asynkron request sendes
 }
 
-// function to load samples
-function loadSample(url, doAfterLoading) {
-    var fetchSound = new XMLHttpRequest(); // Load the Sound with XMLHttpRequest
-    fetchSound.open("GET", url, true); // Path to Audio File
-    fetchSound.responseType = "arraybuffer"; // Read as Binary Data
-    fetchSound.onload = function() {
-        context.decodeAudioData(fetchSound.response, doAfterLoading, onDecodeAudioDataError);
-    }
-    fetchSound.send(); //
-}
 // function to assign sample to the sound buffer for playback (and enable playbutton)
 var assignSample2SoundBuffer = function(decodedBuffer) {
         soundBuffer = decodedBuffer;
@@ -78,6 +68,20 @@ function changeSample() {
 loadSample(soundUrl, assignSample2SoundBuffer);
 loadSample(FilterUrl, assignSample2Filters);
 
+function roter(event) {
+    var rotasjonSlider = document.getElementById("grader");
+    rotasjonSlider.addEventListener('input', function(input) {
+        rotator.roll = rotasjonSlider.value;
+        console.log(rotasjonSlider.value);
+        rotator.updateRotMtx();
+    });
+}
+
+var volumeSlider = document.getElementById('volume-slider');
+volumeSlider.addEventListener('input', function(input) {
+    gainOut.gain.value = volumeSlider.value;
+});
+
 $(document).ready(function() {
 
     // Init event listeners
@@ -96,11 +100,6 @@ $(document).ready(function() {
         sound.isPlaying = false;
         document.getElementById('play').disabled = false;
         document.getElementById('stop').disabled = true;
-    });
-
-    var volumeSlider = document.getElementById('volume-slider');
-    volumeSlider.addEventListener('input', function(input) {
-        gainOut.gain.value = volumeSlider.value;
     });
 
 });
