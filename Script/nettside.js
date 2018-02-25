@@ -68,14 +68,12 @@ function changeSample() {
 loadSample(soundUrl, assignSample2SoundBuffer);
 loadSample(FilterUrl, assignSample2Filters);
 
-function roter(event) {
-    var rotasjonSlider = document.getElementById("grader");
-    rotasjonSlider.addEventListener('input', function(input) {
-        rotator.roll = rotasjonSlider.value;
-        console.log(rotasjonSlider.value);
-        rotator.updateRotMtx();
-    });
-}
+var rotasjonSlider = document.getElementById("grader");
+rotasjonSlider.addEventListener('input', function(input) {
+    rotator.roll = rotasjonSlider.value;
+    console.log(rotasjonSlider.value);
+    rotator.updateRotMtx();
+});
 
 var volumeSlider = document.getElementById('volume-slider');
 volumeSlider.addEventListener('input', function(input) {
