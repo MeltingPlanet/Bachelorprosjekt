@@ -68,17 +68,27 @@ function changeSample() {
 loadSample(soundUrl, assignSample2SoundBuffer);
 loadSample(FilterUrl, assignSample2Filters);
 
+
 var rotasjonSlider = document.getElementById("grader");
-rotasjonSlider.addEventListener('input', function(input) {
+
+window.addEventListener("deviceorientation", function(event) {
+    console.log(event.alpha);
+    var alpha = event.alpha;
+    rotasjonSlider.value = alpha;
     rotator.roll = rotasjonSlider.value;
     console.log(rotasjonSlider.value);
     rotator.updateRotMtx();
-});
+}, true);
+
+//var rotasjonSlider = document.getElementById("grader");
+//rotasjonSlider.addEventListener('input', function(input) {
+
 
 var volumeSlider = document.getElementById('volume-slider');
 volumeSlider.addEventListener('input', function(input) {
     gainOut.gain.value = volumeSlider.value;
 });
+
 
 $(document).ready(function() {
 
