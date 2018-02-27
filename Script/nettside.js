@@ -6,7 +6,7 @@ console.log(ambisonics);
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 var context = new AudioContext; //Initialiserer audio context
 
-var soundUrl = "Lyder/wxyz3.wav";
+var soundUrl = "Lyder/wxyz4.wav";
 var FilterUrl = "Filter/aalto2016_N1.wav";
 
 var soundBuffer, sound;
