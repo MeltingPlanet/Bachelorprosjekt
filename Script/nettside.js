@@ -71,17 +71,29 @@ loadSample(FilterUrl, assignSample2Filters);
 
 var rotasjonSlider = document.getElementById("grader");
 
+var initialOffset = null;
+
 window.addEventListener("deviceorientation", function(event) {
     console.log(event.alpha);
-    var alpha = event.alpha;
+    //var alpha = event.alpha;
+
+    if(initialOffset === null && event.absolute !== true
+        && +event.webkitCompassAccuracy > 0 && +event.webkitCompassAccuracy < 50) {
+        initialOffset = event.webkitCompassHeading || 0;
+        }
+       
+        var alpha = event.alpha - initialOffset;
+        if(alpha < 0) {
+        alpha += 360;
+        }
+       
+        // Now use our derived world-based `alpha` instead of raw `evt.alpha` value
+
     rotasjonSlider.value = alpha;
     rotator.roll = rotasjonSlider.value;
     console.log(rotasjonSlider.value);
     rotator.updateRotMtx();
-}, true);
-
-//var rotasjonSlider = document.getElementById("grader");
-//rotasjonSlider.addEventListener('input', function(input) {
+}, false);
 
 
 var volumeSlider = document.getElementById('volume-slider');
