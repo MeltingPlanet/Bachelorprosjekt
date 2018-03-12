@@ -22,6 +22,10 @@ console.log(binDecoder);
 var converterF2A = new ambisonics.converters.wxyz2acn(context);
 console.log(converterF2A);
 
+// MONO ENCODER #######################################################################################
+var monoEncoder = new ambisonics.monoEncoder(context, 1);
+console.log(monoEncoder);
+
 
 // OUTPUT GAIN #########################################################################################
 var gainOut = context.createGain();
@@ -31,6 +35,8 @@ var gainOut = context.createGain();
 converterF2A.out.connect(rotator.in);
 rotator.out.connect(binDecoder.in);
 binDecoder.out.connect(context.destination);
+
+monoEncoder.out.connect(rotator.in);
 
 
 // LOAD SAMPLE #########################################################################################
@@ -83,15 +89,18 @@ window.addEventListener("deviceorientation", function(event) {
 // READY FUNCTION - PLAY STOP ############################################################################
 $(document).ready(function() {
 
-    for(var i = 1; i <=2; i ++){
+    for(var i = 1; i <=3; i ++){
         var audioElement = document.getElementById("audioElement" + i);
         console.log("audioElement" + i)
         audioElement.loop = true;
      
         var mediaElementSource = context.createMediaElementSource(audioElement);
         console.log(mediaElementSource);
-     
-        mediaElementSource.connect(converterF2A.in);
+        if(i <= 2){
+          mediaElementSource.connect(converterF2A.in);
+        }else{
+          mediaElementSource.connect(monoEncoder.in);
+        }
     };
 });
 
