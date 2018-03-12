@@ -10,7 +10,7 @@
 
 <body>
     <h1>Bachelorprosjektet</h1>
-
+    <!--
     <div id="play/stop">
         <p>Start / Stop audio:
             <button id="play" disabled>Play</button>
@@ -18,15 +18,32 @@
         </p>
     </div>
 
-    <div id="volume">
-        <label for ="volume-slider">Volume</label>
-        <input id="volume-slider" type="range" min="0.1" max="10" value="1" step="0.1" />
+    <div id="play/stop_2">
+        <p>Start / Stop audio 2:
+            <button id="play_2" disabled>Play</button>
+            <button id="stop_2" disabled>Stop</button>
+        </p>
     </div>
-    
+-->
+    <div>
+        <audio controls id="audioElement1">
+            <source src="Lyder/wxyz3.wav" type="audio/wav" />
+        </audio>
+        <audio controls id="audioElement2">
+            <source src="Lyder/wxyz4.wav" type="audio/wav" />
+        </audio>
+        <audio controls id="audioElement3">
+            <source src="Lyder/monoLyd2.wav" type="audio/wav" />
+        </audio>
+    </div>
+
     <div id="rotasjon">
         <label for="grader">Lydbildet roteres i grader (0-360)</label>
         <input id="grader" type="range" min="0" max="360" value="1" step="10" />
+        <label for="monoRota">Monokilde roteres i grader (0-360)</label>
+        <input id="monoRota" type="range" min="0" max="360" value="1" step="10"/>
     </div>  
+
     
     <script src="Script/ambisonics.umd.js"></script>
     <script src="Script/nettside.js"></script>
