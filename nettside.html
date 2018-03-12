@@ -10,21 +10,16 @@
 
 <body>
     <h1>Bachelorprosjektet</h1>
-    <!--
-    <div id="play/stop">
-        <p>Start / Stop audio:
-            <button id="play" disabled>Play</button>
-            <button id="stop" disabled>Stop</button>
-        </p>
-    </div>
 
-    <div id="play/stop_2">
-        <p>Start / Stop audio 2:
-            <button id="play_2" disabled>Play</button>
-            <button id="stop_2" disabled>Stop</button>
-        </p>
+    <div>
+        <select id="audioFile">
+            <option value="0">Velg audiofil</option>
+            <option value="0">Audiofil 1</option>
+            <option value="1">Audiofil 2</option>
+            <option value="2">Audiofil 3</option>
+        </select>
     </div>
--->
+<!--
     <div>
         <audio controls id="audioElement1">
             <source src="Lyder/wxyz3.wav" type="audio/wav" />
@@ -33,9 +28,11 @@
             <source src="Lyder/wxyz4.wav" type="audio/wav" />
         </audio>
         <audio controls id="audioElement3">
-            <source src="Lyder/monoLyd2.wav" type="audio/wav" />
+            <source src="Lyder/monoLyden.wav" type="audio/wav" />
         </audio>
     </div>
+-->
+    <div id="lydvalg"></div>
 
     <div id="rotasjon">
         <label for="grader">Lydbildet roteres i grader (0-360)</label>
@@ -47,6 +44,7 @@
     
     <script src="Script/ambisonics.umd.js"></script>
     <script src="Script/nettside.js"></script>
+    <script src="Script/ajax.js"></script>
 
 </body>
 
