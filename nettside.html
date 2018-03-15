@@ -10,41 +10,50 @@
 
 <body>
     <h1>Bachelorprosjektet</h1>
-
+<!--
     <div>
         <select id="audioFile">
-            <option value="0">Velg audiofil</option>
+            <option>Velg audiofil</option>
             <option value="0">Audiofil 1</option>
             <option value="1">Audiofil 2</option>
             <option value="2">Audiofil 3</option>
         </select>
     </div>
-<!--
-    <div>
-        <audio controls id="audioElement1">
-            <source src="Lyder/wxyz3.wav" type="audio/wav" />
-        </audio>
-        <audio controls id="audioElement2">
-            <source src="Lyder/wxyz4.wav" type="audio/wav" />
-        </audio>
-        <audio controls id="audioElement3">
-            <source src="Lyder/monoLyden.wav" type="audio/wav" />
-        </audio>
-    </div>
 -->
-    <div id="lydvalg"></div>
 
-    <div id="rotasjon">
-        <label for="grader">Lydbildet roteres i grader (0-360)</label>
-        <input id="grader" type="range" min="0" max="360" value="1" step="10" />
-        <label for="monoRota">Monokilde roteres i grader (0-360)</label>
-        <input id="monoRota" type="range" min="0" max="360" value="1" step="10"/>
-    </div>  
 
+    <div>
+    	<div style="width:100%;">
+	        <audio controls controlsList="nodownload" id="audioElement1">
+	            <source src="Lyder/wxyz3.wav" type="audio/wav" />
+	        </audio>
+	        <input id="checkBox1" type="checkbox">
+            <input id="grader1" type="range" min="0" max="360" value="1" step="10" />
+    	</div>
+
+    	<div style="width:100%;">
+	        <audio controls controlsList="nodownload" id="audioElement2">
+	            <source src="Lyder/wxyz4.wav" type="audio/wav" />
+	        </audio>
+	        <input id="checkBox2" type="checkbox">
+            <input id="grader2" type="range" min="0" max="360" value="1" step="10" />
+        </div>
+
+        <div style="width:100%;">
+	        <audio controls controlsList="nodownload" id="audioElement3">
+	            <source src="Lyder/monoLyden.wav" type="audio/wav" />
+	        </audio>
+	        <input id="checkBox3" type="checkbox">
+            <input id="grader3" type="range" min="0" max="360" value="1" step="10" />
+        </div>
+
+    </div>
+
+ <!--   <div id="lydvalg"></div> -->
     
     <script src="Script/ambisonics.umd.js"></script>
     <script src="Script/nettside.js"></script>
-    <script src="Script/ajax.js"></script>
+
 
 </body>
 

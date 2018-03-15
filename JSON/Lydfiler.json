@@ -1,14 +1,14 @@
 [
     {
-        "id":"audioElement1",
+        "id":"audioElement0",
         "src": "Lyder/wxyz3.wav"
     },
     {
-        "id":"audioElement2",
+        "id":"audioElement1",
         "src": "Lyder/wxyz4.wav"
     },
     {
-        "id":"audioElement3",
+        "id":"audioElement2",
         "src": "Lyder/monoLyden.wav"
     }
 ]

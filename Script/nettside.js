@@ -9,8 +9,13 @@ var FilterUrl = "Filter/aalto2016_N1.wav";
 
 
 // AMBISONICS ROTATION #################################################################################
-var rotator = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
-console.log(rotator);
+
+var rotator1 = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
+var rotator2 = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
+var rotatorMono = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
+
+//var rotator2 = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
+console.log(rotator2);
 
 
 //AMBISONIC DECODER ####################################################################################
@@ -32,11 +37,15 @@ var gainOut = context.createGain();
 
 
 //SIGNAL FLOW (FOA --> Rotering --> Bineaural --> Gain --> Destinasjon/ut) #############################
-converterF2A.out.connect(rotator.in);
-rotator.out.connect(binDecoder.in);
+converterF2A.out.connect(rotator1.in);
+rotator1.out.connect(binDecoder.in);
+rotator2.out.connect(binDecoder.in);
 binDecoder.out.connect(context.destination);
 
-monoEncoder.out.connect(rotator.in);
+
+monoEncoder.out.connect(converterF2A.in);
+converterF2A.out.connect(rotatorMono.in);
+rotatorMono.out.connect(binDecoder.in);
 
 
 // LOAD SAMPLE #########################################################################################
@@ -61,48 +70,66 @@ loadSample(FilterUrl, assignSample2Filters);
 
 
 // MOBIL SENSOR ROTERING #############################################################################
-var rotasjonSlider = document.getElementById("grader");
+var rotasjonSlider1 = document.getElementById("grader1");
+var rotasjonSlider2 = document.getElementById("grader2");
+var rotasjonSlider3 = document.getElementById("grader3");
 var initialOffset = null;
 
-window.addEventListener("deviceorientation", function(event) {
-    console.log(event.alpha);
-    //var alpha = event.alpha;
+var sound1Chk = document.getElementById('checkBox1');
+var sound2Chk = document.getElementById('checkBox2');
+var sound3Chk = document.getElementById('checkBox3');
 
-    if(initialOffset === null && event.absolute !== true
-        && +event.webkitCompassAccuracy > 0 && +event.webkitCompassAccuracy < 50) {
-        initialOffset = event.webkitCompassHeading || 0;
-        }
-       
-        var alpha = event.alpha - initialOffset;
-        if(alpha < 0) {
-        alpha += 360;
-        }
-       
-        // Now use our derived world-based `alpha` instead of raw `evt.alpha` value
+var checkboxes = document.querySelectorAll('input');
 
-    rotasjonSlider.value = alpha;
-    rotator.roll = rotasjonSlider.value;
-    console.log(rotasjonSlider.value);
-    rotator.updateRotMtx();
-}, false);
+  checkboxes.forEach(function(boxes){
+    boxes.addEventListener('change', function(){
 
-// READY FUNCTION - PLAY STOP ############################################################################
-$(document).ready(function() {
+        window.addEventListener("deviceorientation", function(event) {
+          var alpha = event.alpha;
+          if(alpha < 0) {
+          alpha += 360;
+          }
 
-    for(var i = 1; i <=3; i ++){
-        var audioElement = document.getElementById("audioElement" + i);
-        console.log("audioElement" + i)
-        audioElement.loop = true;
-     
-        var mediaElementSource = context.createMediaElementSource(audioElement);
-        console.log(mediaElementSource);
-        if(i <= 2){
-          mediaElementSource.connect(converterF2A.in);
-        }else{
-          mediaElementSource.connect(monoEncoder.in);
-        }
-    };
+          if (sound1Chk.checked) {
+                rotasjonSlider1.value = alpha;
+                rotator1.roll = alpha;
+                rotator1.updateRotMtx();
+                console.log(sound1Chk.checked);
+          }
+
+          if (sound2Chk.checked) {
+
+              rotasjonSlider2.value = alpha;
+              rotator2.roll = alpha;
+              rotator2.updateRotMtx();
+          }
+
+          if (sound3Chk.checked) {
+
+              rotasjonSlider3.value = alpha;
+              rotatorMono.roll = alpha;
+              rotatorMono.updateRotMtx();
+          }
+        }, false);
+
+      });
 });
+// READY FUNCTION - PLAY STOP ############################################################################
+
+for(var i = 1; i <=3; i ++){
+    var audioElement = document.getElementById("audioElement" + i);
+
+    console.log("audioElement" + i);
+    audioElement.loop = true;
+ 
+    var mediaElementSource = context.createMediaElementSource(audioElement);
+    console.log(mediaElementSource);
+    if(i <= 2){
+    mediaElementSource.connect(converterF2A.in);
+    }else{
+    mediaElementSource.connect(monoEncoder.in);
+    }
+};
 
 // EXCEPTION ALERT ###########################################################################
 function onDecodeAudioDataError(error) {
@@ -127,12 +154,54 @@ function onDecodeAudioDataError(error) {
          ~~~~~        ##
 #######################################################################
 
+/* ########################### AJAX med JSON #############################
+var select = document.getElementById("audioFile");
+var lydvalg = document.getElementById("lydvalg");
+
+
+select.addEventListener("input", function(){
+    //console.log(select.value);
+    var ourRequest = new XMLHttpRequest();
+    ourRequest.open('GET', 'JSON/Lydfiler.json');
+    ourRequest.onload = function(){
+        var lydfil = JSON.parse(ourRequest.responseText);
+        changeAudio(lydfil);
+}
+ourRequest.send();  
+});
+
+function changeAudio(lydfil){
+    //console.log(lydfil[select.value].id)
+    var audioElement = document.createElement("AUDIO"); 
+
+    audioElement.controls = 'controls';
+    audioElement.id = lydfil[select.value].id;
+    
+    var source = document.createElement("source");
+
+    source.src = lydfil[select.value].src;
+    source.type = "audio/wav";
+
+    audioElement.appendChild(source);
+
+    console.log(audioElement);
+    lydvalg.insertAdjacentHTML('afterbegin', audioElement);
+}
+*/
+
+    /*
+    if(initialOffset === null && event.absolute !== true
+        && +event.webkitCompassAccuracy > 0 && +event.webkitCompassAccuracy < 50) {
+        initialOffset = event.webkitCompassHeading || 0;
+        }
+       
+        var alpha = event.alpha - initialOffset;
+    */
 
 
 
 
 
-
-#######################################################################
- */
+//#######################################################################
+ 
 
