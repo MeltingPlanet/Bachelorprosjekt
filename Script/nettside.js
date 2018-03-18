@@ -14,10 +14,6 @@ var rotator1 = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
 var rotator2 = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
 var rotatorMono = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
 
-//var rotator2 = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
-console.log(rotator2);
-
-
 //AMBISONIC DECODER ####################################################################################
 var binDecoder = new ambisonics.binDecoder(context, 1);
 console.log(binDecoder);
@@ -81,20 +77,24 @@ select.addEventListener("input", function(){
         var lydfil = JSON.parse(ourRequest.responseText);
         changeAudio(lydfil);
 }
-ourRequest.send();  
+if(select.value != "notselect"){
+  ourRequest.send(); 
+} 
 });
 
 function changeAudio(lydfil){
-    var divElement = document.createElement("div");
-    var audioElement = document.createElement("AUDIO");
-    var inputCheckbox = document.createElement("input");
-    var inputGrader = document.createElement("input");  
+  var divElement = document.createElement("div");
+  var audioElement = document.createElement("AUDIO");
+  var inputCheckbox = document.createElement("input");
+  var inputGrader = document.createElement("input");  
+
+
+  if(document.getElementById("audioElement" + select.value)==null){
 
     // Div for audiospor #########################################
-
     divElement.setAttribute("class", "audio");
-
     lydvalg.appendChild(divElement);
+
     // AUDIO ######################################################
     audioElement.setAttribute('controls', 'controls');
     audioElement.setAttribute('id', lydfil[0].id[select.value]);
@@ -111,11 +111,12 @@ function changeAudio(lydfil){
     divElement.appendChild(audioElement);
 
     // Checkbox ###################################################
+    /*
     inputCheckbox.setAttribute("id", lydfil[1].id[select.value]);
     inputCheckbox.setAttribute("type", "checkbox")
 
     divElement.appendChild(inputCheckbox);
-
+    */
     // Gradeslider ################################################
     inputGrader.setAttribute("id", lydfil[2].id[select.value]);
     inputGrader.setAttribute("type", "range");
@@ -131,59 +132,53 @@ function changeAudio(lydfil){
     var audioElement = document.getElementById("audioElement" + select.value);
  
     var mediaElementSource = context.createMediaElementSource(audioElement);
+    console.log(mediaElementSource);
 
-    if(select.value <= 2){
+    if(select.value <= 1){
     mediaElementSource.connect(converterF2A.in);
     }else{
     mediaElementSource.connect(monoEncoder.in);
     }
+  }
 }
 
+var checkbox0 = document.getElementById("checkBox0");
+var checkbox1 = document.getElementById("checkBox1");
+var checkbox2 = document.getElementById("checkBox2");
 
 // MOBIL SENSOR ROTERING #############################################################################
-var rotasjonSlider1 = document.getElementById("grader0");
-var rotasjonSlider2 = document.getElementById("grader1");
-var rotasjonSlider3 = document.getElementById("grader2");
-var initialOffset = null;
 
-var sound1Chk = document.getElementById('checkBox0');
-var sound2Chk = document.getElementById('checkBox1');
-var sound3Chk = document.getElementById('checkBox2');
-
-var checkboxes = document.querySelectorAll('input');
-
-  checkboxes.forEach(function(boxes){
-    boxes.addEventListener('change', function(){
-
-        window.addEventListener("deviceorientation", function(event) {
-          var alpha = event.alpha;
-          if(alpha < 0) {
-          alpha += 360;
-          }
-
-          if (sound1Chk.checked) {
-                rotasjonSlider1.value = alpha;
-                rotator1.roll = alpha;
-                rotator1.updateRotMtx();
-                console.log(sound1Chk.checked);
-          }
-
-          if (sound2Chk.checked) {
-
-              rotasjonSlider2.value = alpha;
-              rotator2.roll = alpha;
-              rotator2.updateRotMtx();
-          }
-
-          if (sound3Chk.checked) {
-
-              rotasjonSlider3.value = alpha;
-              rotatorMono.roll = alpha;
-              rotatorMono.updateRotMtx();
-          }
-        }, false);
-
-      });
+lydvalg.addEventListener("click", function(){
+  window.addEventListener("deviceorientation", function(){
+      var alpha = event.alpha;
+      if(alpha < 0) {
+        alpha += 360;
+      }
+      if(checkbox0.checked == true){
+        console.log("checkbox1: " + checkbox0.checked);
+        var rotasjonSlider1 = document.getElementById("grader0");
+        rotasjonSlider1.value = alpha;
+        rotator1.roll = alpha;
+        console.log(alpha);
+        rotator1.updateRotMtx();
+      }
+      if(checkbox1.checked == true){
+        console.log("checkbox2: " + checkbox1.checked);
+        var rotasjonSlider2 = document.getElementById("grader1");
+        rotasjonSlider2.value = alpha;
+        rotator2.roll = alpha;
+        console.log(alpha);
+        rotator2.updateRotMtx();
+      }
+      if(checkbox2.checked == true){
+        console.log("checkbox3: " + checkbox2.checked);
+        var rotasjonSlider3 = document.getElementById("grader2");
+        rotasjonSlider3.value = alpha;
+        rotatorMono.roll = alpha;
+        console.log(alpha);
+        rotatorMono.updateRotMtx();
+      }
+  });
 });
 // READY FUNCTION - PLAY STOP ############################################################################
 
