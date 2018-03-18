@@ -1,14 +1,28 @@
 [
     {
-        "id":"audioElement0",
-        "src": "Lyder/wxyz3.wav"
+        "id": [
+            "audioElement0",
+            "audioElement1",
+            "audioElement2"
+        ],
+        "src": [
+            "Lyder/wxyz3.wav",
+            "Lyder/wxyz4.wav",
+            "Lyder/monoLyden.wav"
+        ] 
     },
     {
-        "id":"audioElement1",
-        "src": "Lyder/wxyz4.wav"
+        "id": [
+            "checkBox0",
+            "checkBox1",
+            "checkbox2"
+        ]
     },
     {
-        "id":"audioElement2",
-        "src": "Lyder/monoLyden.wav"
+        "id": [
+            "grader0",
+            "grader1",
+            "grader2"
+        ]
     }
 ]

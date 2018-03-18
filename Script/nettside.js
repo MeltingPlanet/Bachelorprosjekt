@@ -68,16 +68,87 @@ var assignSample2Filters = function(decodedBuffer) {
 
 loadSample(FilterUrl, assignSample2Filters);
 
+//########################### AJAX med JSON #############################
+var select = document.getElementById("audioFile");
+var lydvalg = document.getElementById("lydvalg");
+
+
+select.addEventListener("input", function(){
+    //console.log(select.value);
+    var ourRequest = new XMLHttpRequest();
+    ourRequest.open('GET', 'JSON/Lydfiler.json');
+    ourRequest.onload = function(){
+        var lydfil = JSON.parse(ourRequest.responseText);
+        changeAudio(lydfil);
+}
+ourRequest.send();  
+});
+
+function changeAudio(lydfil){
+    var divElement = document.createElement("div");
+    var audioElement = document.createElement("AUDIO");
+    var inputCheckbox = document.createElement("input");
+    var inputGrader = document.createElement("input");  
+
+    // Div for audiospor #########################################
+
+    divElement.setAttribute("class", "audio");
+
+    lydvalg.appendChild(divElement);
+    // AUDIO ######################################################
+    audioElement.setAttribute('controls', 'controls');
+    audioElement.setAttribute('id', lydfil[0].id[select.value]);
+    audioElement.setAttribute('controlsList', 'nodownload');
+    audioElement.setAttribute("loop", "true");
+
+    var source = document.createElement("source");
+
+    source.setAttribute('src', lydfil[0].src[select.value]);
+    source.setAttribute('type', "audio/wav");
+
+    audioElement.appendChild(source);
+
+    divElement.appendChild(audioElement);
+
+    // Checkbox ###################################################
+    inputCheckbox.setAttribute("id", lydfil[1].id[select.value]);
+    inputCheckbox.setAttribute("type", "checkbox")
+
+    divElement.appendChild(inputCheckbox);
+
+    // Gradeslider ################################################
+    inputGrader.setAttribute("id", lydfil[2].id[select.value]);
+    inputGrader.setAttribute("type", "range");
+    inputGrader.setAttribute("min", "0");
+    inputGrader.setAttribute("max", "360");
+    inputGrader.setAttribute("step", "10");
+
+    divElement.appendChild(inputGrader);
+
+    console.log(audioElement);
+
+    //  kobler audioelement til converter eller monoencoder 
+    var audioElement = document.getElementById("audioElement" + select.value);
+ 
+    var mediaElementSource = context.createMediaElementSource(audioElement);
+
+    if(select.value <= 2){
+    mediaElementSource.connect(converterF2A.in);
+    }else{
+    mediaElementSource.connect(monoEncoder.in);
+    }
+}
+
 
 // MOBIL SENSOR ROTERING #############################################################################
-var rotasjonSlider1 = document.getElementById("grader1");
-var rotasjonSlider2 = document.getElementById("grader2");
-var rotasjonSlider3 = document.getElementById("grader3");
+var rotasjonSlider1 = document.getElementById("grader0");
+var rotasjonSlider2 = document.getElementById("grader1");
+var rotasjonSlider3 = document.getElementById("grader2");
 var initialOffset = null;
 
-var sound1Chk = document.getElementById('checkBox1');
-var sound2Chk = document.getElementById('checkBox2');
-var sound3Chk = document.getElementById('checkBox3');
+var sound1Chk = document.getElementById('checkBox0');
+var sound2Chk = document.getElementById('checkBox1');
+var sound3Chk = document.getElementById('checkBox2');
 
 var checkboxes = document.querySelectorAll('input');
 
@@ -116,20 +187,6 @@ var checkboxes = document.querySelectorAll('input');
 });
 // READY FUNCTION - PLAY STOP ############################################################################
 
-for(var i = 1; i <=3; i ++){
-    var audioElement = document.getElementById("audioElement" + i);
-
-    console.log("audioElement" + i);
-    audioElement.loop = true;
- 
-    var mediaElementSource = context.createMediaElementSource(audioElement);
-    console.log(mediaElementSource);
-    if(i <= 2){
-    mediaElementSource.connect(converterF2A.in);
-    }else{
-    mediaElementSource.connect(monoEncoder.in);
-    }
-};
 
 // EXCEPTION ALERT ###########################################################################
 function onDecodeAudioDataError(error) {
@@ -154,41 +211,6 @@ function onDecodeAudioDataError(error) {
          ~~~~~        ##
 #######################################################################
 
-/* ########################### AJAX med JSON #############################
-var select = document.getElementById("audioFile");
-var lydvalg = document.getElementById("lydvalg");
-
-
-select.addEventListener("input", function(){
-    //console.log(select.value);
-    var ourRequest = new XMLHttpRequest();
-    ourRequest.open('GET', 'JSON/Lydfiler.json');
-    ourRequest.onload = function(){
-        var lydfil = JSON.parse(ourRequest.responseText);
-        changeAudio(lydfil);
-}
-ourRequest.send();  
-});
-
-function changeAudio(lydfil){
-    //console.log(lydfil[select.value].id)
-    var audioElement = document.createElement("AUDIO"); 
-
-    audioElement.controls = 'controls';
-    audioElement.id = lydfil[select.value].id;
-    
-    var source = document.createElement("source");
-
-    source.src = lydfil[select.value].src;
-    source.type = "audio/wav";
-
-    audioElement.appendChild(source);
-
-    console.log(audioElement);
-    lydvalg.insertAdjacentHTML('afterbegin', audioElement);
-}
-*/
-
     /*
     if(initialOffset === null && event.absolute !== true
         && +event.webkitCompassAccuracy > 0 && +event.webkitCompassAccuracy < 50) {
@@ -198,7 +220,19 @@ function changeAudio(lydfil){
         var alpha = event.alpha - initialOffset;
     */
 
+/*for(var i = 1; i <=3; i ++){
+    var audioElement = document.getElementById("audioElement" + select.value);
 
+    audioElement.loop = true;
+ 
+    var mediaElementSource = context.createMediaElementSource(audioElement);
+    console.log(mediaElementSource);
+    if(i <= 2){
+    mediaElementSource.connect(converterF2A.in);
+    }else{
+    mediaElementSource.connect(monoEncoder.in);
+    }
+};*/
 
 
 
