@@ -614,7 +614,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var monoEncoder = function () {
-    function monoEncoder(audioCtx, order) {
+    function monoEncoder(audioCtx, order, MonoAzim, MonoElev) {
         (0, _classCallCheck3.default)(this, monoEncoder);
 
 
@@ -623,8 +623,8 @@ var monoEncoder = function () {
         this.ctx = audioCtx;
         this.order = order;
         this.nCh = (order + 1) * (order + 1);
-        this.azim = 0;
-        this.elev = 0;
+        this.azim = MonoAzim;
+        this.elev = MonoElev;
         this.gains = new Array(this.nCh);
         this.gainNodes = new Array(this.nCh);
         this.in = this.ctx.createGain();

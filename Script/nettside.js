@@ -10,38 +10,32 @@ var FilterUrl = "Filter/aalto2016_N1.wav";
 
 // AMBISONICS ROTATION #################################################################################
 
-var rotator1 = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
-var rotator2 = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
-var rotatorMono = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
+var rotator = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
 
 //AMBISONIC DECODER ####################################################################################
 var binDecoder = new ambisonics.binDecoder(context, 1);
 console.log(binDecoder);
-
 
 //FuMa (b-format rekkefølge til ACN <--> WXYZ til WYZX) ################################################
 var converterF2A = new ambisonics.converters.wxyz2acn(context);
 console.log(converterF2A);
 
 // MONO ENCODER #######################################################################################
-var monoEncoder = new ambisonics.monoEncoder(context, 1);
+var MonoAzim = 0;
+var MonoElev = 0;
+var monoEncoder = new ambisonics.monoEncoder(context, 1, MonoAzim, MonoElev);
 console.log(monoEncoder);
-
 
 // OUTPUT GAIN #########################################################################################
 var gainOut = context.createGain();
 
 
 //SIGNAL FLOW (FOA --> Rotering --> Bineaural --> Gain --> Destinasjon/ut) #############################
-converterF2A.out.connect(rotator1.in);
-rotator1.out.connect(binDecoder.in);
-rotator2.out.connect(binDecoder.in);
+converterF2A.out.connect(rotator.in);
+rotator.out.connect(binDecoder.in);
 binDecoder.out.connect(context.destination);
 
-
 monoEncoder.out.connect(converterF2A.in);
-converterF2A.out.connect(rotatorMono.in);
-rotatorMono.out.connect(binDecoder.in);
 
 
 // LOAD SAMPLE #########################################################################################
@@ -84,9 +78,7 @@ if(select.value != "notselect"){
 
 function changeAudio(lydfil){
   var divElement = document.createElement("div");
-  var audioElement = document.createElement("AUDIO");
-  var inputCheckbox = document.createElement("input");
-  var inputGrader = document.createElement("input");  
+  var audioElement = document.createElement("AUDIO");  
 
 
   if(document.getElementById("audioElement" + select.value)==null){
@@ -100,6 +92,7 @@ function changeAudio(lydfil){
     audioElement.setAttribute('id', lydfil[0].id[select.value]);
     audioElement.setAttribute('controlsList', 'nodownload');
     audioElement.setAttribute("loop", "true");
+    audioElement.volume = 0.5;
 
     var source = document.createElement("source");
 
@@ -110,21 +103,7 @@ function changeAudio(lydfil){
 
     divElement.appendChild(audioElement);
 
-    // Checkbox ###################################################
-    /*
-    inputCheckbox.setAttribute("id", lydfil[1].id[select.value]);
-    inputCheckbox.setAttribute("type", "checkbox")
-
-    divElement.appendChild(inputCheckbox);
-    */
     // Gradeslider ################################################
-    inputGrader.setAttribute("id", lydfil[2].id[select.value]);
-    inputGrader.setAttribute("type", "range");
-    inputGrader.setAttribute("min", "0");
-    inputGrader.setAttribute("max", "360");
-    inputGrader.setAttribute("step", "10");
-
-    divElement.appendChild(inputGrader);
 
     console.log(audioElement);
 
@@ -142,9 +121,7 @@ function changeAudio(lydfil){
   }
 }
 
-var checkbox0 = document.getElementById("checkBox0");
-var checkbox1 = document.getElementById("checkBox1");
-var checkbox2 = document.getElementById("checkBox2");
+var checkbox = document.getElementById("checkBox");
 
 // MOBIL SENSOR ROTERING #############################################################################
 
@@ -154,30 +131,14 @@ lydvalg.addEventListener("click", function(){
       if(alpha < 0) {
         alpha += 360;
       }
-      if(checkbox0.checked == true){
-        console.log("checkbox1: " + checkbox0.checked);
-        var rotasjonSlider1 = document.getElementById("grader0");
-        rotasjonSlider1.value = alpha;
-        rotator1.roll = alpha;
+      if(checkbox.checked == true){
+        console.log("checkbox: " + checkbox.checked);
+        var rotasjonSlider = document.getElementById("Slider");
+        rotasjonSlider.value = alpha;
+        rotator.roll = alpha;
         console.log(alpha);
-        rotator1.updateRotMtx();
-      }
-      if(checkbox1.checked == true){
-        console.log("checkbox2: " + checkbox1.checked);
-        var rotasjonSlider2 = document.getElementById("grader1");
-        rotasjonSlider2.value = alpha;
-        rotator2.roll = alpha;
-        console.log(alpha);
-        rotator2.updateRotMtx();
-      }
-      if(checkbox2.checked == true){
-        console.log("checkbox3: " + checkbox2.checked);
-        var rotasjonSlider3 = document.getElementById("grader2");
-        rotasjonSlider3.value = alpha;
-        rotatorMono.roll = alpha;
-        console.log(alpha);
-        rotatorMono.updateRotMtx();
-      }
+        rotator.updateRotMtx();
+      };
   });
 });
 // READY FUNCTION - PLAY STOP ############################################################################

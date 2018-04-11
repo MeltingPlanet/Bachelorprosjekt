@@ -6,23 +6,9 @@
             "audioElement2"
         ],
         "src": [
-            "Lyder/etter_lodding.wav",
-            "Lyder/wxyz4.wav",
+            "Lyder/Bremanger_hav.wav",
+            "Lyder/Viksdalen_bondegård.wav",
             "Lyder/monoLyden.wav"
         ] 
-    },
-    {
-        "id": [
-            "checkBox0",
-            "checkBox1",
-            "checkbox2"
-        ]
-    },
-    {
-        "id": [
-            "grader0",
-            "grader1",
-            "grader2"
-        ]
     }
 ]
