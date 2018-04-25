@@ -1,0 +1,20 @@
+body {
+	text-align: center;
+}
+
+#audioVisual {
+	margin-top: 20px;
+	width:820px;
+	height:412px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: blue;
+}
+#Canvas2 {
+	margin-top: 20px;
+	width:820px;
+	height:412px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: blue;
+}

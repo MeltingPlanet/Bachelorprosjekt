@@ -16,6 +16,9 @@ var rotator = new ambisonics.sceneRotator(context, 1); // 1. orden (FOA)
 var binDecoder = new ambisonics.binDecoder(context, 1);
 console.log(binDecoder);
 
+//ANALYZER 2D ##########################################################################################
+var analyser = new ambisonics.intensityAnalyser(context);
+console.log(analyser);
 //FuMa (b-format rekkefølge til ACN <--> WXYZ til WYZX) ################################################
 var converterF2A = new ambisonics.converters.wxyz2acn(context);
 console.log(converterF2A);
@@ -33,8 +36,8 @@ var gainOut = context.createGain();
 //SIGNAL FLOW (FOA --> Rotering --> Bineaural --> Gain --> Destinasjon/ut) #############################
 converterF2A.out.connect(rotator.in);
 rotator.out.connect(binDecoder.in);
+converterF2A.out.connect(analyser.in);
 binDecoder.out.connect(context.destination);
-
 monoEncoder.out.connect(converterF2A.in);
 
 
@@ -143,6 +146,87 @@ lydvalg.addEventListener("click", function(){
 });
 // READY FUNCTION - PLAY STOP ############################################################################
 
+// AUDIO VISUALIZATION #######################################################################
+// 
+function drawLocal() {
+    // Update audio analyser buffers
+    analyser.updateBuffers();
+    var params = analyser.computeIntensity();
+    updateCircles(params, canvas2);
+    console.log(params);
+}
+
+
+var mapSprite = new Image(820, 412);
+mapSprite.src = "Bilder/map.png";
+
+
+var canvas2 = document.getElementById('Canvas2');
+var canvas2_context = canvas2.getContext("2d");
+var circles = [];
+var numCircleLim = 100;
+var opacityLim = 0.2;
+
+function Circle(xPos, yPos, radius, opacity) {
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.radius = radius;
+    this.opacity = opacity;
+}
+Circle.prototype.draw = function(context) {
+    this.XPos = (document.getElementById('Canvas2').width / 2) - this.Width/2;
+    this.YPos = (document.getElementById('Canvas2').height / 2) - this.Width/2;
+    context.beginPath();
+    context.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2, false);
+    context.closePath();
+
+    context.fillStyle = 'rgba(185, 211, 238,' + this.opacity + ')';
+    // context.fillStyle = 'rgba(255, 102, 51,' + this.opacity + ')';
+    context.fill();
+};
+
+function angles2pixels(azim, elev, cnv) {
+    var rect = cnv.getBoundingClientRect();
+    var xy = [];
+    xy[0] = Math.round(-azim*rect.width/360 + rect.width/2);
+    xy[1] = Math.round(rect.height/2 - elev*rect.height/180);
+    return xy;
+}
+function updateCircles(params, cnv) {
+    var xy = angles2pixels(params[0], params[1], cnv);
+    var radius = 30*(1-params[2]);
+    var opacity = 1;
+
+    if (circles.length<numCircleLim) {
+        var circle = new Circle(xy[0], xy[1], radius, opacity);
+        circles.push(circle);
+    }
+    else {
+        var circle = new Circle(xy[0], xy[1], radius, opacity);
+        circles.shift();
+        circles.push(circle);
+        for (var i=0; i<numCircleLim-1; i++) circles[i].opacity = opacityLim + i*(1-opacityLim)/numCircleLim;
+    }
+}
+
+function draw() {
+    requestAnimationFrame(draw);
+
+    // Clear Canvas
+    canvas2_context.fillStyle = "#000";
+    canvas2_context.fillRect(0, 0, canvas2.width, canvas2.height);
+
+    // Draw map
+    canvas2_context.drawImage(mapSprite, 0, 0);
+
+        // run example specific draw callback
+    if (!(typeof(drawLocal)=='undefined')) { drawLocal(); }
+    // Draw Circles
+
+    for (var i=0; i<circles.length; i++) circles[i].draw(canvas2_context);
+
+};
+draw();
 
 // EXCEPTION ALERT ###########################################################################
 function onDecodeAudioDataError(error) {
