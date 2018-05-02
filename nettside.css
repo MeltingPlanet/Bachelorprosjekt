@@ -1,20 +1,16 @@
-body {
-	text-align: center;
+a-scene {
+  height: 400px;
+  width: 100%;
 }
 
-#audioVisual {
-	margin-top: 20px;
-	width:820px;
-	height:412px;
-	border-style: solid;
-	border-width: 2px;
-	border-color: blue;
-}
-#Canvas2 {
-	margin-top: 20px;
-	width:820px;
-	height:412px;
-	border-style: solid;
-	border-width: 2px;
-	border-color: blue;
+.sounds {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: lightblue;
+	border: solid;
+	border-width: 1px;
+	width: 33%;
+	height: 5%;
+	display: inline-block;
+	text-align: center;
 }

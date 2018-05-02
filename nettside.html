@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content ="ID=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>-->
+    <script src="Script/aframeMaster.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="nettside.css">
 </head>
@@ -60,15 +63,16 @@
     </div>
     <div class="container">
         <h1 class="page-header">Naturlyder</h1>
- 
-        <div class="form-group">
-            <select id="audioFile" class="form-control">
-                <option value="notselect">Velg audiofil</option>
-                <option value="0">Audiofil 1</option>
-                <option value="1">Audiofil 2</option>
-                <option value="2">Audiofil 3</option>
-            </select>
-        </div>
+        <form>
+            <div class="form-group">
+                <select id="audioFile" class="form-control">
+                    <option value="notselect">Velg audiofil</option>
+                    <option value="0" href="#">Audiofil 1</option>
+                    <option value="1" href="#">Audiofil 2</option>
+                    <option value="2" href="#">Audiofil 3</option>
+                </select>
+            </div>
+        </form>
         <br>
         <div id="lydvalg">
             <input id="checkBox" type="checkbox" value="false">
@@ -76,13 +80,33 @@
         </div>
         <br>
         <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:50%">
-                50%
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:60%">
+                60%
             </div>
         </div>
-    </div>
-        <canvas id="Canvas2" width="820" height="412"></canvas> 
+        
+        <canvas id="Canvas2" width="820" height="412"></canvas>
+        
+        <div id="EmbeddedVisuals">
+            <a-scene embedded>
+                <a-camera listener></camera>
+                 <!--<a-entity environment="preset: starry; dressingAmount: 5"></a-entity>-->
+                <a-entity light="type: ambient; color: #DDD; intensity: 0.2;"></a-entity>
+                <a-entity light="type: directional; color: #FFF; intensity: 0.2" position="-0.5 1 1"></a-entity> 
+                <a-entity geometry="box" position="0 0 -5"></a-entity>
 
+            </a-scene>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <script src="Script/gyronorm.complete.min.js"></script>
     <script src="Script/ambisonics.umd.js"></script>
     <script src="Script/nettside.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
