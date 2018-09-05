@@ -1,1 +1,1 @@
-#Bachelor's project in Music Technology at NTNU
+Bachelor's project in Music Technology at NTNU
