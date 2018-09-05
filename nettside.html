@@ -7,140 +7,82 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content ="ID=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>-->
     <script src="Script/aframeMaster.js"></script>
+    <!--Skal brukes senere i utviklingen av webdesign-->
     <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="nettside.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Webside</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+    <div id="open">
+    <p onclick="openNav()">Åpne</p>
+    </div>
+    <div id="myNav" class="overlay">
+        <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content">
+            <h1 class="page-header">Naturlyder</h1>
+            <form>
+                <div class="form-group">
+                    <select id="audioFile" class="form-control">
+                        <option value="notselect">Velg audiofil</option>
+                        <option value="0">Hav</option>
+                        <option value="1">Bondeland</option>
+                        <option value="2">Regn</option>
+                        <option value="3">Elv</option>
+                        <option value="4">Fugler</option>
+                        <option value="5">Botanisk</option>
+                        <option value="6">Mono Måke</option>
+                        <option value="7">Hest</option>
+                        <option value="8">Sau</option>
+                        <option value="9">Hønsehus</option>
+                        <option value="10">Ender</option>
+                        <option value="11">Katt</option>
+                    </select>
+                </div>
+            </form>
+            <div id="lydvalg">
             </div>
-        </div>
-    </nav>
-
-    <div class="jumbotron text-center">
-        <div class="container">
-            <h1>Bachelorprosjekt i Musikkteknologi</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit eligendi, optio explicabo architecto distinctio porro nostrum eos, cupiditate tempora at aperiam sunt, debitis recusandae adipisci temporibus. Officia hic accusantium nam.</p>
-            <a href="#" class="btn btn-primary">Les mer</a>
+            <div id="MonoPlassering">
+                <!--
+                <label for="MonoSliderAzim" id="azimLabel">Azimuth:</label>
+                <input id="MonoSliderAzim" type="range" min="-180" max="180", step="10">
+                <label for="MonoSliderElev" id="elevLabel">Høyde:</label>
+                <input id="MonoSliderElev" type="range" min="-90" max="90", step="10">
+                -->
+            </div>
+            <div>
+                <canvas id="analyserCanvas" width="800px" height="200px"></canvas>
+            </div>
         </div>
     </div>
-    <div class="container">
-        <h1 class="page-header">Naturlyder</h1>
-        <form>
-            <div class="form-group">
-                <select id="audioFile" class="form-control">
-                    <option value="notselect">Velg audiofil</option>
-                    <option value="0" href="#">Audiofil 1</option>
-                    <option value="1" href="#">Audiofil 2</option>
-                    <option value="2" href="#">Audiofil 3</option>
-                </select>
-            </div>
-        </form>
-        <br>
-        <div id="lydvalg">
-            <input id="checkBox" type="checkbox" value="false">
-            <input id="Slider" type="range" min="0" max ="360" step="10">
-        </div>
-        <br>
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:60%">
-                60%
-            </div>
-        </div>
-        
-        <canvas id="Canvas2" width="820" height="412"></canvas>
-        
-        <div id="EmbeddedVisuals">
-            <a-scene embedded>
-                <a-camera listener></camera>
-                 <!--<a-entity environment="preset: starry; dressingAmount: 5"></a-entity>-->
-                <a-entity light="type: ambient; color: #DDD; intensity: 0.2;"></a-entity>
-                <a-entity light="type: directional; color: #FFF; intensity: 0.2" position="-0.5 1 1"></a-entity> 
-                <a-entity geometry="box" position="0 0 -5"></a-entity>
+    <!--Setter opp en A-frame scene slik at vi får VR-vinduet-->   
+    <div id="EmbeddedVisuals">
+        <a-scene embedded>
+            <a-entity light="type: ambient; color: #DDD; intensity: 0.2;"></a-entity>
+            <a-entity light="type: directional; color: #FFF; intensity: 1;" position="-0.5 1 1"></a-entity> 
+            <a-entity position="0 0 0" rotation="0 -90 0" wasd-controls>
+                <a-camera></a-camera>
+            </a-entity>
 
-            </a-scene>
-        </div>
+
+            <a-assets>
+                <img id="city" crossorigin="anonymous" src="Bilder/skyBox3.png">
+            </a-assets>
+            <a-sky id="image-360" radius="4000" src="#city"></a-sky>
+        </a-scene>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 
-
-    <script src="Script/gyronorm.complete.min.js"></script>
     <script src="Script/ambisonics.umd.js"></script>
     <script src="Script/nettside.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!--Scriptene under skal brukes ved senere anledning-->
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
 
 
 </body>
 
 </html>
-
-<!--
-    <div>
-        <div class="audio">
-            <audio controls controlsList="nodownload" id="audioElement1">
-                <source src="Lyder/wxyz3.wav" type="audio/wav" />
-            </audio>
-            <input id="checkBox0" type="checkbox">
-            <input id="grader0" type="range" min="0" max="360" value="1" step="10" />
-        </div>
-
-        <div class="audio">
-            <audio controls controlsList="nodownload" id="audioElement2">
-                <source src="Lyder/wxyz4.wav" type="audio/wav" />
-            </audio>
-            <input id="checkBox1" type="checkbox">
-            <input id="grader1" type="range" min="0" max="360" value="1" step="10" />
-        </div>
-
-        <div class="audio">
-            <audio controls controlsList="nodownload" id="audioElement3">
-                <source src="Lyder/monoLyden.wav" type="audio/wav" />
-            </audio>
-            <input id="checkBox2" type="checkbox">
-            <input id="grader2" type="range" min="0" max="360" value="1" step="10" />
-        </div>
--->
