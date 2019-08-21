@@ -243,7 +243,7 @@ $('#open').click(function() {
     }
     if ($('#audioElement5').length) {
       update3d(params6);
-      console.log('test');
+      //console.log('test');
     }
   }
 
