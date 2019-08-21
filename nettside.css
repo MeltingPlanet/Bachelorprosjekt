@@ -11,10 +11,6 @@ body {
 p:hover{
     cursor: pointer;
 }
-
-span:hover{
-    cursor: pointer;
-}
 #open{
     height: 10vh;
     width: 100vw;
@@ -113,14 +109,9 @@ span:hover{
 }
 
 #MonoSliderElev {
-    width: 100%;
+	width: 100%;
 }
 
 #azimLabel, #elevLabel {
-    display: block;
-}
-
-#analyserCanvas {
-    width: 100%;
-    height: 20%;
+	display: block;
 }

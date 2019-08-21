@@ -6,14 +6,7 @@
             "audioElement2",
             "audioElement3",
             "audioElement4",
-            "audioElement5",
-            "audioElement6",
-            "audioElement7",
-            "audioElement8",
-            "audioElement9",
-            "audioElement10",
-            "audioElement11"
-
+            "audioElement5"
         ],
         "src": [
             "Lyder/Bremanger_hav.wav",
@@ -21,13 +14,7 @@
             "Lyder/Regn.wav",
             "Lyder/Elv.wav",
             "Lyder/Fugler.wav",
-            "Lyder/Botanisk.wav",
-            "Lyder/Mono_make.wav",
-            "Lyder/Hest_multi.wav",
-            "Lyder/Sau_multi.wav",
-            "Lyder/Chicken_multi.wav",
-            "Lyder/Duck_multi.wav",
-            "Lyder/Katt.wav"
+            "Lyder/Mono_make.wav"
         ] 
     }
 ]

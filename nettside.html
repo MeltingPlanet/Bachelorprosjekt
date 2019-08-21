@@ -33,28 +33,17 @@
                         <option value="2">Regn</option>
                         <option value="3">Elv</option>
                         <option value="4">Fugler</option>
-                        <option value="5">Botanisk</option>
-                        <option value="6">Mono Måke</option>
-                        <option value="7">Hest</option>
-                        <option value="8">Sau</option>
-                        <option value="9">Hønsehus</option>
-                        <option value="10">Ender</option>
-                        <option value="11">Katt</option>
+                        <option value="5">Mono Måke</option>
                     </select>
                 </div>
             </form>
             <div id="lydvalg">
             </div>
             <div id="MonoPlassering">
-                <!--
                 <label for="MonoSliderAzim" id="azimLabel">Azimuth:</label>
                 <input id="MonoSliderAzim" type="range" min="-180" max="180", step="10">
-                <label for="MonoSliderElev" id="elevLabel">Høyde:</label>
+                <label for="MonoSliderAzim" id="elevLabel">Høyde:</label>
                 <input id="MonoSliderElev" type="range" min="-90" max="90", step="10">
-                -->
-            </div>
-            <div>
-                <canvas id="analyserCanvas" width="800px" height="200px"></canvas>
             </div>
         </div>
     </div>
@@ -63,15 +52,11 @@
         <a-scene embedded>
             <a-entity light="type: ambient; color: #DDD; intensity: 0.2;"></a-entity>
             <a-entity light="type: directional; color: #FFF; intensity: 1;" position="-0.5 1 1"></a-entity> 
-            <a-entity position="0 0 0" rotation="0 -90 0" wasd-controls>
-                <a-camera></a-camera>
-            </a-entity>
-
 
             <a-assets>
                 <img id="city" crossorigin="anonymous" src="Bilder/skyBox3.png">
             </a-assets>
-            <a-sky id="image-360" radius="4000" src="#city"></a-sky>
+            <a-sky id="image-360" radius="1000" src="#city"></a-sky>
         </a-scene>
     </div>
 
