@@ -1,1 +1,1 @@
-http-server -c-1 -o
+http-server -o

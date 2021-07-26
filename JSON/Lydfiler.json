@@ -1,20 +1,22 @@
 [
-    {
-        "id": [
-            "audioElement0",
-            "audioElement1",
-            "audioElement2",
-            "audioElement3",
-            "audioElement4",
-            "audioElement5"
-        ],
-        "src": [
-            "Lyder/Bremanger_hav.wav",
-            "Lyder/Viksdalen_bondegård.wav",
-            "Lyder/Regn.wav",
-            "Lyder/Elv.wav",
-            "Lyder/Fugler.wav",
-            "Lyder/Mono_make.wav"
-        ] 
-    }
+  {
+    "id": [
+      "audioElement0",
+      "audioElement1",
+      "audioElement2",
+      "audioElement3",
+      "audioElement4",
+      "audioElement5",
+      "audioElement6"
+    ],
+    "src": [
+      "Lyder/Test.wav",
+      "Lyder/Bremanger_hav.wav",
+      "Lyder/Viksdalen_bondegård.wav",
+      "Lyder/Regn.wav",
+      "Lyder/Elv.wav",
+      "Lyder/Fugler.wav",
+      "Lyder/Mono_make.wav"
+    ]
+  }
 ]
